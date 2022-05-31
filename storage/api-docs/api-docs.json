@@ -1,0 +1,641 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TestTask",
+        "description": "TestTask OpenApi description",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "description": "Get user information with orders and its information",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "your_access_token"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": 86400
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "bearer"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "readOnly": "true",
+                                                    "example": 1
+                                                },
+                                                "email": {
+                                                    "description": "User unique email address",
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "readOnly": "true",
+                                                    "example": "user@gmail.com"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "readOnly": "true",
+                                                    "example": "User Name"
+                                                },
+                                                "start_time": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2022-06-11 21:36:35"
+                                                },
+                                                "finish_time": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2022-06-11 21:36:35"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "validation errors."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "description": "LogOut from the system",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "successful.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "your_access_token"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": 86400
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "bearer"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "readOnly": "true",
+                                                    "example": 1
+                                                },
+                                                "email": {
+                                                    "description": "User unique email address",
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "readOnly": "true",
+                                                    "example": "user@gmail.com"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "readOnly": "true",
+                                                    "example": "User Name"
+                                                },
+                                                "start_time": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2022-06-11 21:36:35"
+                                                },
+                                                "finish_time": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2022-06-11 21:36:35"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh",
+                "description": "Refresh users's access token",
+                "operationId": "refresh",
+                "responses": {
+                    "200": {
+                        "description": "successful.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "your_access_token"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": 86400
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "bearer"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "readOnly": "true",
+                                                    "example": 1
+                                                },
+                                                "email": {
+                                                    "description": "User unique email address",
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "readOnly": "true",
+                                                    "example": "user@gmail.com"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "readOnly": "true",
+                                                    "example": "User Name"
+                                                },
+                                                "start_time": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2022-06-11 21:36:35"
+                                                },
+                                                "finish_time": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2022-06-11 21:36:35"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/location": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Get blocks quantity per location",
+                "description": "Get blocks quantity in general and available qyantity per location",
+                "operationId": "getBlocksQuantityPerLocation",
+                "responses": {
+                    "200": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "locations": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "location_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "location_city": {
+                                                        "type": "string",
+                                                        "example": "Wilmington"
+                                                    },
+                                                    "location_blocks_quantity": {
+                                                        "type": "integer",
+                                                        "example": 184
+                                                    },
+                                                    "location_blocks_available_quantity": {
+                                                        "type": "integer",
+                                                        "example": 184
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "example": [
+                                                {
+                                                    "location_id": 1,
+                                                    "location_city": "Wilmington",
+                                                    "location_blocks_quantity": "184",
+                                                    "location_blocks_available_quantity": "184"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/order": {
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "calculate new order",
+                "description": "Check for availability of needed blocks quantity and give price",
+                "operationId": "CreateOrder",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "temperature",
+                                    "start_time",
+                                    "finish_time",
+                                    "capacity",
+                                    "location_id"
+                                ],
+                                "properties": {
+                                    "start_time": {
+                                        "type": "datatime",
+                                        "example": "2022-06-11 21:36:35"
+                                    },
+                                    "finish_time": {
+                                        "type": "datatime",
+                                        "example": "2022-06-11 21:36:35"
+                                    },
+                                    "temperature": {
+                                        "type": "integer",
+                                        "example": -10
+                                    },
+                                    "capacity": {
+                                        "type": "integer",
+                                        "example": 30
+                                    },
+                                    "location_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfull.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "AAAAAAAAAAAA"
+                                        },
+                                        "capacity": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": 40
+                                        },
+                                        "price": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "readOnly": "true",
+                                            "example": 650.5
+                                        },
+                                        "debt": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "readOnly": "true",
+                                            "example": 650.5
+                                        },
+                                        "start_time": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2022-06-11 21:36:35"
+                                        },
+                                        "finish_time": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2022-06-11 21:36:35"
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 90
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "validation errors."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/order/{location_id}": {
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "calculate new order",
+                "description": "Check for availability of needed blocks quantity and give price",
+                "operationId": "CalculateOrder",
+                "parameters": [
+                    {
+                        "name": "location_id",
+                        "in": "query",
+                        "description": "id of needed location",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "temperature",
+                                    "start_time",
+                                    "finish_time",
+                                    "capacity"
+                                ],
+                                "properties": {
+                                    "start_time": {
+                                        "type": "datatime",
+                                        "example": "2022-06-11 21:36:35"
+                                    },
+                                    "finish_time": {
+                                        "type": "datatime",
+                                        "example": "2022-06-11 21:36:35"
+                                    },
+                                    "temperature": {
+                                        "type": "integer",
+                                        "example": -10
+                                    },
+                                    "capacity": {
+                                        "type": "integer",
+                                        "example": 30
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfull.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "blocks_quantity": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "50"
+                                        },
+                                        "price": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": 450
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "validation errors."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user-profile": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user information",
+                "description": "Get user information with orders and its information",
+                "operationId": "getUserProfile",
+                "responses": {
+                    "200": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "readOnly": "true",
+                                                    "example": 1
+                                                },
+                                                "email": {
+                                                    "description": "User unique email address",
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "readOnly": "true",
+                                                    "example": "user@gmail.com"
+                                                },
+                                                "orders": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "code": {
+                                                                "type": "string",
+                                                                "example": "AAAAAAAAAAAA"
+                                                            },
+                                                            "start_time": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2022-06-11 21:36:35"
+                                                            },
+                                                            "finish_time": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2022-06-11 21:36:35"
+                                                            },
+                                                            "status_id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "example": "cancelled"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "example": [
+                                                        {
+                                                            "id": 1,
+                                                            "code": "AAAAAAAAAAAA",
+                                                            "start_time": "2022-06-11 21:36:35",
+                                                            "finish_time": "2022-06-11 21:36:35",
+                                                            "status_id": 3,
+                                                            "status": "cancelled"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "validation errors."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "401": {
+                "description": "Unauthorized"
+            },
+            "422": {
+                "description": "validation errors."
+            }
+        }
+    }
+}
