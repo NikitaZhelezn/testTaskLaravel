@@ -28,7 +28,7 @@ class LocationRepository implements LocationRepositoryInterface
     /**
      * @return Location[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all()
+    public function all() :Collection
     {
         return $this->model::all();
     }
@@ -128,13 +128,14 @@ class LocationRepository implements LocationRepositoryInterface
     protected function getTakenBlocksQuery($newOrderStartTime, $newOrderFinishTime): Collection
     {
         return DB::table('orders')
-            ->whereBetween('start_time', [$newOrderStartTime, $newOrderFinishTime])
-            ->oRwhereBetween('finish_time', [$newOrderStartTime, $newOrderFinishTime])
+            ->select(['orders.id', 'order_room.blocks_quantity', 'order_room.room_id', 'orders.start_time',
+                'locations.city', 'rooms.location_id', 'rooms.temperature'])
             ->join('order_room', 'order_room.order_id', '=', 'orders.id')
             ->join('rooms', 'rooms.id', '=', 'order_room.room_id')
             ->join('locations', 'locations.id', '=', 'rooms.location_id')
-            ->select(['orders.id', 'order_room.blocks_quantity', 'order_room.room_id', 'orders.start_time',
-                'locations.city', 'rooms.location_id', 'rooms.temperature'])->get();
+            ->whereBetween('start_time', [$newOrderStartTime, $newOrderFinishTime])
+            ->oRwhereBetween('finish_time', [$newOrderStartTime, $newOrderFinishTime])
+            ->get();
     }
 
     /**

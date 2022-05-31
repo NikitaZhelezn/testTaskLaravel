@@ -442,7 +442,7 @@
                 ]
             }
         },
-        "/api/order/{location_id}": {
+        "/api/order/calculate/{location_id}": {
             "post": {
                 "tags": [
                     "Orders"
@@ -453,7 +453,7 @@
                 "parameters": [
                     {
                         "name": "location_id",
-                        "in": "query",
+                        "in": "path",
                         "description": "id of needed location",
                         "required": true
                     }
@@ -635,6 +635,16 @@
             },
             "422": {
                 "description": "validation errors."
+            }
+        },
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

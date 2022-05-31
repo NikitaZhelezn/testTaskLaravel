@@ -3,6 +3,7 @@
 namespace App\Services\PriceCalculationService\PriceCalculationWithDatabaseTariffs;
 
 use App\Http\Requests\Request;
+use App\Models\Location;
 use App\Services\PriceCalculationService\PriceCalculationServiceInterface;
 use App\Services\PriceCalculationService\PriceCalculationWithDatabaseTariffs\TariffModels\LocationTariff;
 use App\Services\PriceCalculationService\PriceCalculationWithDatabaseTariffs\TariffModels\TemperatureTariff;
@@ -12,16 +13,16 @@ class TariffCalculation implements PriceCalculationServiceInterface
 
     /**
      * @param Request $request
-     * @param int $location_id
+     * @param Location $location
      * @param array $available_blocks_for_location
      * @return array
      */
-    public function getPriceAndBlocksQuantity(Request $request, int $location_id,
+    public function getPriceAndBlocksQuantity(Request $request, Location $location,
                                               array   $available_blocks_for_location): array
     {
         $blocks_quantity = $this->getNeededQuantityOfRooms($request->capacity);
         $blocks_in_rooms_to_order = $this->getNeededBlocksPerRoom($available_blocks_for_location, $blocks_quantity);
-        $price = $this->getPriceForChoosenBlocks($blocks_in_rooms_to_order, $location_id, $blocks_quantity);
+        $price = $this->getPriceForChoosenBlocks($blocks_in_rooms_to_order, $location->id, $blocks_quantity);
         return [
             'blocks_quantity' => $blocks_quantity,
             'price' => $price

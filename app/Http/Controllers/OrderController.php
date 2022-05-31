@@ -122,15 +122,14 @@ class OrderController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/order/{location_id}",
+     *     path="/api/order/calculate/{location_id}",
      *     operationId="CalculateOrder",
      *     tags = {"Orders"},
-     *     security={ {"bearer": {} }},
      *     summary = "calculate new order",
      *     description = "Check for availability of needed blocks quantity and give price",
      *     @OA\Parameter(
      *         name="location_id",
-     *         in="query",
+     *         in="path",
      *         description="id of needed location",
      *         required=true,
      *      ),
@@ -170,7 +169,8 @@ class OrderController extends Controller
      *     @OA\Response(
      *         response=422,
      *         description="validation errors."
-     *     )
+     *     ),
+     *      security={ {"bearer": {} }},
      * );
      *
      * @param OrderCalculationRequest $request
@@ -179,8 +179,11 @@ class OrderController extends Controller
      */
     public function calculate(OrderCalculationRequest $request, Location $location): array
     {
-        $blocks_price = $this->priceCalculationService->getPriceAndBlocksQuantity($request, $location->id,
-            $this->locationRepository->getAvailableBlocksForLocation($request, $location));
+        $available_blocks_for_location = $this->locationRepository
+            ->getAvailableBlocksForLocation($request, $location);
+        $blocks_price = $this->priceCalculationService->getPriceAndBlocksQuantity($request, $location,
+            $available_blocks_for_location);
+
         if ($blocks_price['price'] == 0) {
             throw new HttpResponseException(response()->json('No blocks', 200));
         }

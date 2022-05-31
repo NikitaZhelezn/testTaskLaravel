@@ -11,6 +11,8 @@ class Status extends Model
 
     public $timestamps = false;
 
+    const PROGRESS = 'progress';
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
