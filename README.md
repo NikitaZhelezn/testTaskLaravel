@@ -1,9 +1,33 @@
 INSTALL
 
-1. git clone
-2. do instructions on https://laradock.io/
-3. cd laradock
-4. docker-compose up -d nginx mysql workspace
-5. docker-compose exec workspace bash
-6. php artisan migrate --seed
 
+```
+git clone 
+
+```
+
+install Laradock
+[do instructions on Laradock] (https://laradock.io/)
+```
+git clone https://github.com/Laradock/laradock.git && cd laradock
+```
+
+run docker containers
+```
+docker-compose up -d nginx mysql workspace
+```
+
+run cli workspace 
+```
+docker-compose exec workspace bash
+```
+Add data to database
+```
+php artisan migrate --seed
+```
+Generate Api documentation
+```
+php artisan l5-swagger:generate 
+```
+
+[go to API Documentation] http://localhost/api/documentation
